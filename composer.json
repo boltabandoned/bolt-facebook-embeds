@@ -1,6 +1,6 @@
 {
-    "name": "boltabandoned/facebook",
-    "description": "Extension to insert Facebook Like, Comments and Pages.",
+    "name": "boltabandoned/facebookembeds",
+    "description": "Extension to embed Facebook Like, Comments and Pages.",
     "type": "bolt-extension",
     "keywords": [],
     "require": {
@@ -18,7 +18,7 @@
             "init.php"
         ],
         "psr-4": {
-            "Bolt\\Extension\\boltabandoned\\facebook\\": ""
+            "Bolt\\Extension\\boltabandoned\\facebookembeds\\": ""
         }
     }
 }

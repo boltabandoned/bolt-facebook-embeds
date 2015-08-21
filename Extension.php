@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\boltabandoned\facebook;
+namespace Bolt\Extension\boltabandoned\facebookembeds;
 
 use Bolt\Extensions\Snippets\Location as SnippetLocation;
 
@@ -8,7 +8,7 @@ class Extension extends \Bolt\BaseExtension
 {
     public function getName()
     {
-        return "Facebook Like, Comments and Pages";
+        return "Facebook Embeds";
     }
 
     public function initialize()

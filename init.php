@@ -1,5 +1,5 @@
 <?php
 
-use Bolt\Extension\boltabandoned\facebook\Extension;
+use Bolt\Extension\boltabandoned\facebookembeds\Extension;
 
 $app['extensions']->register(new Extension($app));
