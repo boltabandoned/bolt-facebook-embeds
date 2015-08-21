@@ -1,8 +1,8 @@
-Facebook Like, Comments and Pages
+Facebook Embeds
 ====================
 
 This extension adds three twig functions with named arguments. Use as many or as few arguments as you like.
-The arguments map very closely to facebooks own documented methods, see the following for more info:
+The arguments map very closely to facebooks own documented arguments, see the following for more info:
 
 https://developers.facebook.com/docs/plugins/like-button
 

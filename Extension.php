@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\sahassar\facebook;
+namespace Bolt\Extension\sahassar\facebookembeds;
 
 use Bolt\Extensions\Snippets\Location as SnippetLocation;
 
@@ -8,7 +8,7 @@ class Extension extends \Bolt\BaseExtension
 {
     public function getName()
     {
-        return "Facebook Like, Comments and Pages";
+        return "Facebook Embeds";
     }
 
     public function initialize()

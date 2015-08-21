@@ -1,6 +1,6 @@
 {
-    "name": "sahassar/facebook",
-    "description": "Extension to insert Facebook Like, Comments and Pages.",
+    "name": "sahassar/facebookembeds",
+    "description": "Extension to embed Facebook Like, Comments and Pages.",
     "type": "bolt-extension",
     "keywords": [],
     "require": {
@@ -18,7 +18,7 @@
             "init.php"
         ],
         "psr-4": {
-            "Bolt\\Extension\\sahassar\\facebook\\": ""
+            "Bolt\\Extension\\sahassar\\facebookembeds\\": ""
         }
     }
 }
