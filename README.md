@@ -12,7 +12,7 @@ https://developers.facebook.com/docs/plugins/comments
 
 ##Examples:
 
-    {{facebookpage(
+    {{facebookPage(
         url = "https://www.facebook.com/facebook",
         height = 500,
         small = true,
@@ -24,7 +24,7 @@ https://developers.facebook.com/docs/plugins/comments
         showlink = false
     )}}
     
-    {{facebooklike(
+    {{facebookLike(
         url = "https://developers.facebook.com/docs/plugins/",
         width = "100%",
         action = "like",
@@ -34,7 +34,7 @@ https://developers.facebook.com/docs/plugins/comments
         colorscheme = "light"
     )}}
     
-    {{facebookcomments(
+    {{facebookComments(
         url = "http://developers.facebook.com/docs/plugins/comments/",
         posts = 1,
         colorscheme = light,
