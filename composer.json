@@ -20,5 +20,9 @@
         "psr-4": {
             "Bolt\\Extension\\boltabandoned\\facebookembeds\\": ""
         }
+    },
+    "extra": {
+        "bolt-assets": "assets",
+        "bolt-icon": "assets/facebook-icon.png"
     }
 }
