@@ -2,8 +2,6 @@
 
 namespace Bolt\Extension\boltabandoned\facebookembeds;
 
-use Bolt\Extensions\Snippets\Location as SnippetLocation;
-
 class Extension extends \Bolt\BaseExtension
 {
     public function getName()
@@ -15,9 +13,10 @@ class Extension extends \Bolt\BaseExtension
     {
         if ($this->app['config']->getWhichEnd()=='frontend') {
             $this->addSnippet('endofbody', 'facebookScript');
-            $this->addTwigFunction('facebookLike', 'facebookLike', array('is_variadic' => true));
-            $this->addTwigFunction('facebookComments', 'facebookComments', array('is_variadic' => true));
-            $this->addTwigFunction('facebookPage', 'facebookPage', array('is_variadic' => true));
+            $this->addTwigFunction('facebooklike', 'facebookLike', array('is_variadic' => true));
+            $this->addTwigFunction('facebookcomments', 'facebookComments', array('is_variadic' => true));
+            $this->addTwigFunction('facebookpage', 'facebookPage', array('is_variadic' => true));
+            $this->addTwigFunction('facebookfeed', 'facebookFeed', array('is_variadic' => true));
         }
     }
 
@@ -123,5 +122,44 @@ EOM;
         $html = str_replace("%colorscheme%", $args['colorscheme'], $html);
 
         return new \Twig_Markup($html, 'UTF-8');
+    }
+    
+    
+    function facebookFeed(array $args = array())
+    {
+        $defaults = array(
+            'user' => 'facebook',
+            'access_token' => $this->app['config']->get('general/facebook_access_token'),
+            'fields' => ['id', 'name', 'link', 'about', 'cover', 'description_html', 'posts.limit(5){link, story, picture, message, created_time}', 'albums.limit(5){name, photos.limit(5)}']
+        );
+        
+        $args = array_merge($defaults, $args);
+        
+        $args['fields'] = urlencode(implode(',', $args['fields']));
+
+        $url = sprintf(
+            'https://graph.facebook.com/v2.5/%s?fields=%s&access_token=%s',
+            $args['user'],
+            $args['fields'],
+            $args['access_token']
+        );
+        
+        $cachekey = sprintf(
+            "FacebookCache%s%s",
+            $args['user'],
+            $args['fields']
+        );
+        
+        if(!$args['access_token']){
+            return 'no access token set';
+        }
+        
+        $res = $this->app['cache']->fetch($cachekey);
+        if ($res === false) {
+            $res = $this->app['guzzle.client']->get($url, array(), $curlOptions)->getBody(true);
+            $res = json_decode($res, true);
+            $this->app['cache']->save($cachekey, $res, 7200);
+        }
+        return $res;
     }
 }
