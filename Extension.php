@@ -13,6 +13,11 @@ class Extension extends \Bolt\BaseExtension
     {
         if ($this->app['config']->getWhichEnd()=='frontend') {
             $this->addSnippet('endofbody', 'facebookScript');
+            
+            $this->addTwigFunction('facebookLike', 'facebookLike', array('is_variadic' => true));
+            $this->addTwigFunction('facebookComments', 'facebookComments', array('is_variadic' => true));
+            $this->addTwigFunction('facebookPage', 'facebookPage', array('is_variadic' => true));
+            
             $this->addTwigFunction('facebooklike', 'facebookLike', array('is_variadic' => true));
             $this->addTwigFunction('facebookcomments', 'facebookComments', array('is_variadic' => true));
             $this->addTwigFunction('facebookpage', 'facebookPage', array('is_variadic' => true));
