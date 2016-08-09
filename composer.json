@@ -1,28 +1,25 @@
 {
-    "name": "sahassar/facebookembeds",
-    "description": "Extension to embed Facebook Like, Comments and Pages.",
+    "name": "SahAssar/FacebookEmbeds",
     "type": "bolt-extension",
-    "keywords": [],
+    "description" : "A helper extension for facebook likes, feeds, comments and pages.",
     "require": {
-        "bolt/bolt": ">=2.0.0,<3.0.0"
+        "bolt/bolt": "^3.0.0"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Svante Richter",
-            "email": "svante.richter@gmail.com"
+            "name" : "Svante Richter",
+            "email" : "svante.richter@gmail.com"
         }
     ],
     "autoload": {
-        "files": [
-            "init.php"
-        ],
         "psr-4": {
-            "Bolt\\Extension\\sahassar\\facebookembeds\\": ""
+            "Bolt\\Extension\\SahAssar\\FacebookEmbeds\\": "src"
         }
     },
     "extra": {
-        "bolt-assets": "assets",
-        "bolt-icon": "assets/facebook-icon.png"
+        "bolt-assets": "web",
+        "bolt-icon": "assets/facebook-icon.png",
+        "bolt-class": "Bolt\\Extension\\SahAssar\\FacebookEmbeds\\FacebookEmbedsExtension"
     }
 }
