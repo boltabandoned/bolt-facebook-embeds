@@ -13,36 +13,19 @@ https://developers.facebook.com/docs/plugins/comments
 
 ##Examples:
 
-    {{facebookPage(
-        url = "https://www.facebook.com/facebook",
-        height = 500,
-        small = true,
-        cover = true,
-        faces = false,
-        posts = true,
-        responsive = true,
-        cta = false,
-        showlink = false
+    {{facebook_page(
+        url = "https://www.facebook.com/facebook"
     )}}
     
-    {{facebookLike(
-        url = "https://developers.facebook.com/docs/plugins/",
-        width = "100%",
-        action = "like",
-        faces = true,
-        layout = "standard",
-        share = false,
-        colorscheme = "light"
+    {{facebook_like(
+        url = "https://developers.facebook.com/docs/plugins/"
     )}}
     
-    {{facebookComments(
-        url = "http://developers.facebook.com/docs/plugins/comments/",
-        posts = 1,
-        colorscheme = light,
-        orderby = social
+    {{facebook_comments(
+        url = "http://developers.facebook.com/docs/plugins/comments/"
     )}}
     
-The final function, `facebookfeed` is a bit different. It fetches info from
+The final function, `facebook_feed` is a bit different. It fetches info from
 facebook via the graph api, and caches it in bolts cache. Since you get the
 full data you can layout your widget however you want. See facebooks developer
 tools for help in generating an access token, I recommend that you use a app
@@ -50,7 +33,7 @@ token since those do not expire. The access_token can also be set in the main
 configuration using the key `facebook_access_token` if you do not want it in
 your template.
     
-    {% set result =  facebookfeed(
+    {% set result =  facebook_feed(
         user = "facebook",
         access_token = "dfhjdfhjsdfjkgshdglsdfg|dfgsdfgjklsdfg",
         fields = ['id', 'name', 'link', 'about', 'cover', 'description_html', 'posts.limit(5){link, story, picture, message, created_time}']

@@ -1,34 +1,41 @@
 <?php
 
-namespace Bolt\Extension\boltabandoned\facebookembeds;
+namespace Bolt\Extension\boltabandoned\FacebookEmbeds;
 
-class Extension extends \Bolt\BaseExtension
+use Bolt\Asset\Target;
+use Bolt\Controller\Zone;
+use Bolt\Asset\Snippet\Snippet;
+use Bolt\Extension\SimpleExtension;
+
+class FacebookEmbedsExtension extends SimpleExtension
 {
-    public function getName()
+    protected function registerAssets()
     {
-        return "Facebook Embeds";
+        $asset = new Snippet();
+        $asset->setCallback([$this, 'facebookScript'])
+            ->setLocation(Target::END_OF_BODY)
+            ->setZone(Zone::FRONTEND)
+            ->setPriority(99);
+
+        return [
+            $asset,
+        ];
     }
 
-    public function initialize()
+    protected function registerTwigFunctions()
     {
-        if ($this->app['config']->getWhichEnd()=='frontend') {
-            $this->addSnippet('endofbody', 'facebookScript');
-            
-            $this->addTwigFunction('facebookLike', 'facebookLike', array('is_variadic' => true));
-            $this->addTwigFunction('facebookComments', 'facebookComments', array('is_variadic' => true));
-            $this->addTwigFunction('facebookPage', 'facebookPage', array('is_variadic' => true));
-            
-            $this->addTwigFunction('facebooklike', 'facebookLike', array('is_variadic' => true));
-            $this->addTwigFunction('facebookcomments', 'facebookComments', array('is_variadic' => true));
-            $this->addTwigFunction('facebookpage', 'facebookPage', array('is_variadic' => true));
-            $this->addTwigFunction('facebookfeed', 'facebookFeed', array('is_variadic' => true));
-        }
+        return [
+            'facebook_like' => ['facebookLike', ['is_variadic' => true]],
+            'facebook_comments' => ['facebookComments', ['is_variadic' => true]],
+            'facebook_page' => ['facebookPage', ['is_variadic' => true]],
+            'facebook_feed' => ['facebookFeed', ['is_variadic' => true]]
+        ];
     }
 
     public function facebookScript()
     {
-
-        $language = $this->app['config']->get('general/locale');
+        $app = $this->getContainer();
+        $language = $app['config']->get('general/locale');
 
         $html = <<< EOM
         <div id="fb-root"></div>
@@ -45,8 +52,9 @@ EOM;
     
     function facebookPage(array $args = array())
     {
+        $app = $this->getContainer();
         $defaults = array(
-              'url' => $this->app['paths']['canonicalurl'],
+              'url' => 'https://www.facebook.com/facebook',
               'height' => 500,
               'small' => false,
               'cover' => true,
@@ -82,8 +90,9 @@ EOM;
     
     function facebookComments(array $args = array())
     {
+        $app = $this->getContainer();
         $defaults = array(
-              'url' => $this->app['paths']['canonicalurl'],
+              'url' => $app['resources']->getUrl('canonicalurl'),
               'width' => "100%",
               'posts' => 10,
               'colorscheme' => "light",
@@ -104,9 +113,10 @@ EOM;
     
     function facebookLike(array $args = array())
     {
+        $app = $this->getContainer();
         $defaults = array(
-              'url' => $this->app['paths']['canonicalurl'],
-              'width' => "100%",
+              'url' => $app['resources']->getUrl('canonicalurl'),
+              'width' => "100",
               'action' => "like",
               'faces' => true,
               'layout' => "standard",
@@ -132,9 +142,10 @@ EOM;
     
     function facebookFeed(array $args = array())
     {
+        $app = $this->getContainer();
         $defaults = array(
             'user' => 'facebook',
-            'access_token' => $this->app['config']->get('general/facebook_access_token'),
+            'access_token' => $app['config']->get('general/facebook_access_token'),
             'fields' => ['id', 'name', 'link', 'about', 'cover', 'description_html', 'posts.limit(5){link, story, picture, message, created_time}', 'albums.limit(5){name, photos.limit(5)}']
         );
         
@@ -159,11 +170,11 @@ EOM;
             return 'no access token set';
         }
         
-        $res = $this->app['cache']->fetch($cachekey);
+        $res = $app['cache']->fetch($cachekey);
         if ($res === false) {
-            $res = $this->app['guzzle.client']->get($url, array(), $curlOptions)->getBody(true);
+            $res = $app['guzzle.client']->get($url, array(), $curlOptions)->getBody(true);
             $res = json_decode($res, true);
-            $this->app['cache']->save($cachekey, $res, 7200);
+            $app['cache']->save($cachekey, $res, 7200);
         }
         return $res;
     }
