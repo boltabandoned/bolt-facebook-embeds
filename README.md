@@ -38,17 +38,21 @@ your template.
         access_token = "dfhjdfhjsdfjkgshdglsdfg|dfgsdfgjklsdfg",
         fields = ['id', 'name', 'link', 'about', 'cover', 'description_html', 'posts.limit(5){link, story, picture, message, created_time}']
     ) %}
-    <div class="fbWidget">
-        <div class="fbHeader" style="background-image:url({{result.cover.source}})">
-            <h2><a href="{{result.link}}">{{result.name}}</a></h2>
-            <p>{{result.about}}</p>
+    {% if result.error %}
+        {{ result.error }}
+    {% else %}
+        <div class="fbWidget">
+            <div class="fbHeader" style="background-image:url({{result.cover.source}})">
+                <h2><a href="{{result.link}}">{{result.name}}</a></h2>
+                <p>{{result.about}}</p>
+            </div>
+            <div class="fbPosts">
+                {% for post in result.posts.data %}
+                    <a href="{{post.link}}">
+                        <img src="{{post.picture}}"/>
+                    </a>
+                    <p>{{post.story|default(post.message)}}</p>
+                {% endfor %}
+            </div>
         </div>
-        <div class="fbPosts">
-            {% for post in result.posts.data %}
-                <a href="{{post.link}}">
-                    <img src="{{post.picture}}"/>
-                </a>
-                <p>{{post.story}}</p>
-            {% endfor %}
-        </div>
-    </div>
+    {% endif %}
