@@ -18,7 +18,7 @@
         }
     },
     "extra": {
-        "bolt-assets": "web",
+        "bolt-assets": "assets",
         "bolt-icon": "assets/facebook-icon.png",
         "bolt-class": "Bolt\\Extension\\boltabandoned\\FacebookEmbeds\\FacebookEmbedsExtension"
     }
