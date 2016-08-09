@@ -1,5 +1,5 @@
 {
-    "name": "SahAssar/FacebookEmbeds",
+    "name": "sahassar/facebookembeds",
     "type": "bolt-extension",
     "description" : "A helper extension for facebook likes, feeds, comments and pages.",
     "require": {
