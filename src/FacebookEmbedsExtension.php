@@ -172,7 +172,11 @@ EOM;
         
         $res = $app['cache']->fetch($cachekey);
         if ($res === false) {
-            $res = $app['guzzle.client']->get($url, array(), $curlOptions)->getBody(true);
+            try {
+                $res = $app['guzzle.client']->get($url, array(), $curlOptions)->getBody(true);
+            } catch (\Exception $e) {
+                return ['error' =>  $e->getMessage()];
+            }
             $res = json_decode($res, true);
             $app['cache']->save($cachekey, $res, 7200);
         }
