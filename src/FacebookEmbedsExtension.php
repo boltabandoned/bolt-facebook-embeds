@@ -142,6 +142,8 @@ EOM;
     
     function facebookFeed(array $args = array())
     {
+        $curlOptions = [];
+
         $app = $this->getContainer();
         $defaults = array(
             'user' => 'facebook',
